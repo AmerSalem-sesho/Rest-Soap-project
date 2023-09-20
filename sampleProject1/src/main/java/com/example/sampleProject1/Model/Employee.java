@@ -2,11 +2,12 @@ package com.example.sampleProject1.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 
-@Data
-@AllArgsConstructor
+@Entity
 public class Employee {
     @Id
     private int id;
@@ -14,12 +15,12 @@ public class Employee {
     private int age;
     private double salary;
 
-    public int getId() {
-        return id;
+    public Employee() {
+
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -44,5 +45,9 @@ public class Employee {
 
     public void setSalary(double salary) {
         this.salary = salary;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
