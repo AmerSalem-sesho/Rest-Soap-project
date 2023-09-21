@@ -1,15 +1,27 @@
-
 version: '3'
+
 services:
-  zookeeper:
-    image: wurstmeister/zookeeper
-    ports:
-      - "2181:2181"
-  kafka:
-    image: wurstmeister/kafka
-    ports:
-      - "9092:9092"
+  app:
+    image: 'docker-spring-boot-postgres:latest'
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/employee  # Update the host to 'db'
+      - SPRING_DATASOURCE_USERNAME=amer
+      - SPRING_DATASOURCE_PASSWORD=salem
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    deploy:
+      replicas: 1
+    ports:
+      - "8082:8080"
+    networks:
+      - myapp-network  # Create a custom network
+
+  db:
+    image: 'postgres:13.1-alpine'
+    environment:
+      - POSTGRES_USER=amer
+      - POSTGRES_PASSWORD=salem
+    networks:
+      - myapp-network  # Connect to the same network as 'app'
+
+networks:
+  myapp-network:  # Define a custom network for your services
