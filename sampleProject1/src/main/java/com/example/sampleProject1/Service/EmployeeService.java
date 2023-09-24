@@ -4,6 +4,9 @@ import com.example.sampleProject1.Repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Array;
+import java.util.ArrayList;
+
 @Service
 public class EmployeeService {
     @Autowired
@@ -18,14 +21,12 @@ public class EmployeeService {
     public String deleteAllEmployees(){repository.deleteAll();return "all Employees deleted!";}
     public Employee updateEmployee(int id,Employee employee) {
 
-        //read employee from database
-        Employee temp = repository.findById(id).get();
-        //assign new values for the employee
+        Employee temp = repository.findById(id).orElse(new Employee());
         temp.setId(employee.getId());
         temp.setName(employee.getName());
         temp.setAge(employee.getAge());
         temp.setSalary(employee.getSalary());
-        //then we update the employee using the update method
-        return repository.save(temp);
+        repository.save(temp);
+        return temp;
     }
 }
