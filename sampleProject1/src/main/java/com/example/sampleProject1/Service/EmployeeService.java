@@ -21,11 +21,12 @@ public class EmployeeService {
     public String deleteAllEmployees(){repository.deleteAll();return "all Employees deleted!";}
     public Employee updateEmployee(int id,Employee employee) {
 
-        Employee temp = repository.findById(id).get();
+        Employee temp = repository.findById(id).orElse(new Employee());
         temp.setId(employee.getId());
         temp.setName(employee.getName());
         temp.setAge(employee.getAge());
         temp.setSalary(employee.getSalary());
-        return repository.save(temp);
+        repository.save(temp);
+        return temp;
     }
 }
