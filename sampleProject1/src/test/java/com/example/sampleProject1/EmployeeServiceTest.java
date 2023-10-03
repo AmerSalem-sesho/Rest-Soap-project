@@ -86,7 +86,8 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void testUpdateEmployee() {
+    void testUpdateEmployee()
+    {
         int id = 1;
         Employee existingEmployee = new Employee(id, "John Doe", 30, 50000.0);
 
